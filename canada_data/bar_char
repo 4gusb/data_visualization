@@ -1,0 +1,36 @@
+import pandas as pd
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+df = pd.read_excel("./Canada.xlsx",
+        sheet_name='Canada by Citizenship',
+        skiprows= range(20))
+
+# print(df.head(5))
+
+
+# Changes to the og df
+
+df.drop(['AREA', 'REG', 'DEV', 'Type', 'Coverage'], axis=1, inplace=True)
+df.rename(columns={'OdName': 'Country', 'AreaName': 'Continent', 'RegName': 'Region'}, inplace=True)
+df.set_index("Country", inplace=True)
+# print(df.head(5))
+
+
+# Bar chart information
+
+years = list(range(1980, 2014))
+df_iceland = df.loc['Iceland', years]
+# print(df_iceland.head())
+
+
+# Bar chart generation
+
+plt.bar(years, df_iceland, color='#1D267D')
+plt.title('Icelandic inmigrants to Canada from 1980 to 2013')
+plt.xlabel('Year')
+plt.ylabel('Number of inmigrants')
+
+plt.show()
+
+--
